@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Configure & run metube
+if [ ! -f "/mnt/data/config/metube_options.conf" ]; then
+    cp /workdir/metube_options.conf /mnt/data/config/
+fi
+
+source /mnt/data/config/metube_options.conf
+export $(sed '/^#/d' /mnt/data/config/metube_options.conf | cut -d= -f1)
+cd /app
+
+exec 2>&1
+exec python3 /app/app/main.py
